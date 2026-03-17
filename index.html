@@ -88,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,4,10,0.92
 .nav-links a:hover{color:var(--g);text-shadow:var(--gs);}
 
 /* HERO */
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 8vw 4rem;gap:3rem;position:relative;overflow:hidden;}
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 8vw 4rem;gap:3rem;position:relative;}
 #hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.03) 1px,transparent 1px);background-size:34px 34px;animation:gm 18s linear infinite;}
 @keyframes gm{from{background-position:0 0;}to{background-position:34px 34px;}}
 .hero-left{position:relative;z-index:3;}
@@ -437,7 +437,17 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
 
 @media(max-width:768px){
   #hero{grid-template-columns:1fr;padding:6rem 5vw 3rem;}
-  .hero-right{order:-1;gap:.8rem;}
+  .hero-right{
+    order:-1;
+    gap:1.2rem;
+    justify-content:center;
+    width:100%;
+    padding:0 2vw;
+  }
+  .hex-card{
+    width:clamp(130px,38vw,165px);
+    flex-shrink:0;
+  }
   .hero-ai-letters{font-size:60px;}
   .about-grid,.egrid,.cgrid{grid-template-columns:1fr;}
   .nav-links{display:none;}
@@ -515,7 +525,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
     <div class="hero-btns">
       <a href="#projects" class="btn">View Projects</a>
       <a href="#contact" class="btn btn-c">Get In Touch</a>
-      <a href="mailto:desireddysumanth77@gmail.com" class="btn btn-a">Email Me</a>
+      <a href="/cdn-cgi/l/email-protection#731716001a011617170a00061e121d071b444433141e121a1f5d101c1e" class="btn btn-a">Email Me</a>
     </div>
   </div>
 
@@ -682,7 +692,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
   <div class="cgrid">
     <div class="clist fi">
       <a href="tel:+14698501729" class="citem"><div class="cico2" style="color:var(--g)">☎</div><div><div class="clbl">Phone</div><div class="cval">+1 (469) 850-1729</div></div></a>
-      <a href="mailto:desireddysumanth77@gmail.com" class="citem"><div class="cico2" style="color:var(--a)">✉</div><div><div class="clbl">Email</div><div class="cval">desireddysumanth77@gmail.com</div></div></a>
+      <a href="/cdn-cgi/l/email-protection#1c78796f756e797878656f69717d7268742b2b5c7b717d7570327f7371" class="citem"><div class="cico2" style="color:var(--a)">✉</div><div><div class="clbl">Email</div><div class="cval"><span class="__cf_email__" data-cfemail="8eeaebfde7fcebeaeaf7fdfbe3efe0fae6b9b9cee9e3efe7e2a0ede1e3">[email&#160;protected]</span></div></div></a>
       <a href="https://www.linkedin.com/in/sumanth-d-773562361" target="_blank" class="citem"><div class="cico2" style="color:var(--c)">in</div><div><div class="clbl">LinkedIn</div><div class="cval">sumanth-d-773562361</div></div></a>
       <a href="https://github.com/sumanthreddy8910" target="_blank" class="citem"><div class="cico2" style="color:var(--p)">⌥</div><div><div class="clbl">GitHub</div><div class="cval">sumanthreddy8910</div></div></a>
     </div>
@@ -701,7 +711,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
   <div class="ftcopy">Built with LangChain &amp; lots of ♥ &nbsp;// GenAI Engineer</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ══ NEURAL BG CANVAS ══ */
 (function(){
   const cv=document.getElementById('neural-canvas'),ctx=cv.getContext('2d');
@@ -908,13 +918,3 @@ function showFS(type, text) {
   el.style.cssText =
     'margin-top:.8rem;padding:.6rem 1rem;font-size:11px;letter-spacing:1px;' +
     'border-left:2px solid ' + (ok ? '#00ff41' : '#ff004f') + ';' +
-    'color:' + (ok ? '#00ff41' : '#ff004f') + ';' +
-    'background:' + (ok ? 'rgba(0,255,65,0.06)' : 'rgba(255,0,79,0.06)') + ';';
-}
-function clearFS() {
-  var el = document.getElementById('form-status');
-  if (el) { el.style.opacity = '0'; setTimeout(function(){ el.remove(); }, 400); }
-}
-</script>
-</body>
-</html>

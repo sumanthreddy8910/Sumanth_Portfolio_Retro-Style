@@ -484,6 +484,42 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
   section{padding:4rem 5vw;}
 }
 
+/* ═══ PROJECT MODAL ═══ */
+#proj-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s;}
+#proj-modal.open{opacity:1;pointer-events:all;}
+#proj-modal-bg{position:absolute;inset:0;background:rgba(2,4,10,0.92);backdrop-filter:blur(8px);}
+.pm-box{position:relative;z-index:2;background:var(--card);border:1px solid var(--border);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;transform:translateY(30px) scale(0.97);transition:transform .3s,opacity .3s;opacity:0;}
+#proj-modal.open .pm-box{transform:none;opacity:1;}
+.pm-bar{background:#040c07;padding:.55rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:3;}
+.pm-dots{display:flex;gap:.4rem;align-items:center;}
+.pm-dot{width:9px;height:9px;border-radius:50%;}
+.pm-close{font-family:'Press Start 2P',monospace;font-size:9px;color:#1a4a2a;background:transparent;border:1px solid #0f2a1a;padding:.3rem .7rem;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.pm-close:hover{color:var(--r);border-color:var(--r);box-shadow:0 0 8px rgba(255,0,79,0.3);}
+.pm-head{padding:1.8rem 1.8rem 1rem;position:relative;overflow:hidden;}
+.pm-num{font-family:'Press Start 2P',monospace;font-size:7px;color:#1a3a3a;letter-spacing:2px;margin-bottom:.5rem;}
+.pm-title{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(20px,4vw,30px);color:var(--c);text-shadow:var(--cs);margin-bottom:.4rem;}
+.pm-yr{font-size:10px;color:var(--a);letter-spacing:3px;margin-bottom:.8rem;}
+.pm-accent{height:2px;margin-bottom:1.4rem;}
+.pm-body{padding:0 1.8rem 1.8rem;display:flex;flex-direction:column;gap:1.4rem;}
+.pm-section-title{font-family:'VT323',monospace;font-size:18px;color:var(--g);letter-spacing:2px;margin-bottom:.5rem;}
+.pm-section-title::before{content:'▶ ';}
+.pm-desc{font-size:12px;color:#4a8a6a;line-height:1.9;}
+.pm-feats{list-style:none;display:flex;flex-direction:column;gap:.35rem;}
+.pm-feats li{font-size:12px;color:#3a7a5a;padding-left:1.2rem;position:relative;line-height:1.7;}
+.pm-feats li::before{content:'▸';position:absolute;left:0;color:var(--g);}
+.pm-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.pm-tag{font-size:9px;padding:.25rem .6rem;border:1px solid #082010;color:#1a5a3a;letter-spacing:1px;}
+.pm-links{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem;}
+.pm-link{font-size:9px;padding:.4rem 1rem;border:1px solid;text-decoration:none;letter-spacing:1px;transition:all .2s;text-transform:uppercase;font-family:'Share Tech Mono',monospace;position:relative;overflow:hidden;}
+.pm-link::before{content:'';position:absolute;inset:0;transform:translateX(-100%);transition:transform .2s;z-index:-1;}
+.pm-link:hover::before{transform:none;}
+.pm-link.gh{border-color:#1a5a3a;color:#2a7a5a;}.pm-link.gh::before{background:#1a5a3a;}.pm-link.gh:hover{color:var(--bg);box-shadow:var(--gs);}
+.pm-link.lv{border-color:#1a4a5a;color:#2a6a7a;}.pm-link.lv::before{background:#1a4a5a;}.pm-link.lv:hover{color:var(--bg);box-shadow:var(--cs);}
+.pm-scan{position:absolute;left:0;right:0;height:2px;background:var(--c);opacity:0.25;animation:pmScan 3s ease-in-out infinite;pointer-events:none;}
+@keyframes pmScan{0%{top:0;opacity:0;}10%{opacity:0.25;}90%{opacity:0.25;}100%{top:100%;opacity:0;}}
+.pc{cursor:pointer;}
+.pc .pn::after{content:' // CLICK TO EXPAND';color:#0a2a1a;}
+
 /* ═══ THEME SWITCHER ═══ */
 .theme-switcher{display:flex;align-items:center;gap:.4rem;margin-left:.8rem;padding-left:.8rem;border-left:1px solid #0f2a1a;}
 .theme-btn{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;flex-shrink:0;}
@@ -677,7 +713,7 @@ body.theme-solar{
       <div class="sc"><span class="sn">3+</span><span class="sl">Years Exp</span></div>
       <div class="sc"><span class="sn">5+</span><span class="sl">AI Projects</span></div>
       <div class="sc"><span class="sn">3.71</span><span class="sl">MS GPA</span></div>
-      <div class="sc"><span class="sn">9.45</span><span class="sl">B.Tech CGPA</span></div>
+      <div class="sc"><span class="sn">94.5%</span><span class="sl">Published</span></div>
       <div class="sc" style="grid-column:1/-1"><span class="sn" style="font-size:12px">OCI 2025</span><span class="sl">Oracle GenAI Certified</span></div>
     </div>
   </div>
@@ -745,12 +781,12 @@ body.theme-solar{
 <section id="projects">
   <div class="sh fi"><span class="sh-num">[04]</span><span class="sh-title">Projects</span><div class="sh-line"></div></div>
   <div class="pgrid">
-    <div class="pc c1 fi"><div class="pn">PROJECT_01</div><div class="pname">Web-Database App</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">Full-stack with Vue.js, Node.js + Express, REST APIs, MongoDB. Deployed on Netlify.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/sumanth_vue.git" target="_blank">GitHub Vue</a><a class="plink gh" href="https://github.com/sumanthreddy8910/sumanth_node.git" target="_blank">GitHub Node</a></div></div>
-    <div class="pc c2 fi"><div class="pn">PROJECT_02</div><div class="pname">Facebook Spam Detector</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">ML system using NLP classifiers to detect spam. Visualized with ROC curves and heatmaps.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Final-Report-Data_Mining.git" target="_blank">GitHub</a></div></div>
-    <div class="pc c3 fi"><div class="pn">PROJECT_03</div><div class="pname">Full-Stack Web App</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">Dynamic data management app with MongoDB, REST APIs. Live on Netlify.</div><div class="plinks"><a class="plink lv" href="https://sumanth-reddy.netlify.app/" target="_blank">Live Demo</a></div></div>
-    <div class="pc c4 fi"><div class="pn">PROJECT_04</div><div class="pname">Steganography</div><div class="pyr">2023 // University of New Haven</div><div class="pdesc">Data hiding in BMP images and WAV audio for secure comms and cybersecurity research.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Steaganography---Research-Paper.git" target="_blank">GitHub</a></div></div>
-    <div class="pc c5 fi"><div class="pn">PROJECT_05</div><div class="pname">Polyclinic DBMS</div><div class="pyr">2022 // University of New Haven</div><div class="pdesc">Dentist management system with MySQL, ER modeling, automated billing and scheduling.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Dentist-Polyclinic-Management-System-DBMS-.git" target="_blank">GitHub</a></div></div>
-    <div class="pc c6 fi"><div class="pn">PROJECT_06 // PUBLISHED</div><div class="pname">Fake News Detector</div><div class="pyr">2021–2022 // SRM University</div><div class="pdesc">Ensemble ML achieving <strong style="color:var(--c)">94.5% accuracy</strong>. Published IJRASET Vol.10, March 2022.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Learning-Based-Fake-News-Detector-Using-Multiple-Features-Using-Machine-Learning.git" target="_blank">GitHub</a></div></div>
+    <div class="pc c1 fi" onclick="openProjModal(0)"><div class="pn">PROJECT_01</div><div class="pname">Web-Database App</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">Full-stack with Vue.js, Node.js + Express, REST APIs, MongoDB. Deployed on Netlify.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/sumanth_vue.git" target="_blank" onclick="event.stopPropagation()">GitHub Vue</a><a class="plink gh" href="https://github.com/sumanthreddy8910/sumanth_node.git" target="_blank" onclick="event.stopPropagation()">GitHub Node</a></div></div>
+    <div class="pc c2 fi" onclick="openProjModal(1)"><div class="pn">PROJECT_02</div><div class="pname">Facebook Spam Detector</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">ML system using NLP classifiers to detect spam. Visualized with ROC curves and heatmaps.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Final-Report-Data_Mining.git" target="_blank" onclick="event.stopPropagation()">GitHub</a></div></div>
+    <div class="pc c3 fi" onclick="openProjModal(2)"><div class="pn">PROJECT_03</div><div class="pname">Full-Stack Web App</div><div class="pyr">2024 // University of New Haven</div><div class="pdesc">Dynamic data management app with MongoDB, REST APIs. Live on Netlify.</div><div class="plinks"><a class="plink lv" href="https://sumanth-reddy.netlify.app/" target="_blank" onclick="event.stopPropagation()">Live Demo</a></div></div>
+    <div class="pc c4 fi" onclick="openProjModal(3)"><div class="pn">PROJECT_04</div><div class="pname">Steganography</div><div class="pyr">2023 // University of New Haven</div><div class="pdesc">Data hiding in BMP images and WAV audio for secure comms and cybersecurity research.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Steaganography---Research-Paper.git" target="_blank" onclick="event.stopPropagation()">GitHub</a></div></div>
+    <div class="pc c5 fi" onclick="openProjModal(4)"><div class="pn">PROJECT_05</div><div class="pname">Polyclinic DBMS</div><div class="pyr">2022 // University of New Haven</div><div class="pdesc">Dentist management system with MySQL, ER modeling, automated billing and scheduling.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Dentist-Polyclinic-Management-System-DBMS-.git" target="_blank" onclick="event.stopPropagation()">GitHub</a></div></div>
+    <div class="pc c6 fi" onclick="openProjModal(5)"><div class="pn">PROJECT_06 // PUBLISHED</div><div class="pname">Fake News Detector</div><div class="pyr">2021–2022 // SRM University</div><div class="pdesc">Ensemble ML achieving <strong style="color:var(--c)">94.5% accuracy</strong>. Published IJRASET Vol.10, March 2022.</div><div class="plinks"><a class="plink gh" href="https://github.com/sumanthreddy8910/Learning-Based-Fake-News-Detector-Using-Multiple-Features-Using-Machine-Learning.git" target="_blank" onclick="event.stopPropagation()">GitHub</a></div></div>
   </div>
 </section>
 
@@ -785,6 +821,47 @@ body.theme-solar{
     </div>
   </div>
 </section>
+
+<!-- PROJECT MODAL -->
+<div id="proj-modal" role="dialog" aria-modal="true">
+  <div id="proj-modal-bg" onclick="closeProjModal()"></div>
+  <div class="pm-box">
+    <div class="pm-bar">
+      <div class="pm-dots">
+        <div class="pm-dot" style="background:var(--r)"></div>
+        <div class="pm-dot" style="background:var(--a)"></div>
+        <div class="pm-dot" style="background:var(--g)"></div>
+        <span style="font-family:'Press Start 2P',monospace;font-size:7px;color:#1a3a2a;letter-spacing:2px;margin-left:.5rem;" id="pm-bar-title">PROJECT</span>
+      </div>
+      <button class="pm-close" onclick="closeProjModal()">[ ESC ]</button>
+    </div>
+    <div class="pm-head">
+      <div class="pm-scan"></div>
+      <div class="pm-num" id="pm-num"></div>
+      <div class="pm-title" id="pm-title"></div>
+      <div class="pm-yr" id="pm-yr"></div>
+      <div class="pm-accent" id="pm-accent"></div>
+    </div>
+    <div class="pm-body">
+      <div>
+        <div class="pm-section-title">Overview</div>
+        <div class="pm-desc" id="pm-desc"></div>
+      </div>
+      <div>
+        <div class="pm-section-title">Key Features</div>
+        <ul class="pm-feats" id="pm-feats"></ul>
+      </div>
+      <div>
+        <div class="pm-section-title">Tech Stack</div>
+        <div class="pm-tags" id="pm-tags"></div>
+      </div>
+      <div>
+        <div class="pm-section-title">Links</div>
+        <div class="pm-links" id="pm-links"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1010,6 +1087,148 @@ function clearFS() {
   var el = document.getElementById('form-status');
   if (el) el.remove();
 }
+
+/* ══ PROJECT MODAL ══ */
+var PROJECTS = [
+  {
+    num: 'PROJECT_01',
+    title: 'Web-Database App',
+    yr: '2024 // University of New Haven',
+    grad: 'linear-gradient(90deg,#00f5ff,#bf5fff)',
+    desc: 'A full-stack web application built to demonstrate end-to-end data management using modern JavaScript frameworks. The frontend is powered by Vue.js with reactive components, while the backend exposes RESTful APIs via Node.js and Express. All data is persisted in MongoDB and the app is deployed live on Netlify.',
+    feats: [
+      'Vue.js SPA with component-based reactive UI',
+      'Node.js + Express RESTful API backend',
+      'MongoDB for flexible document-based data storage',
+      'Full CRUD operations across frontend and backend',
+      'Deployed to Netlify with continuous deployment'
+    ],
+    tags: ['Vue.js','Node.js','Express','MongoDB','REST API','Netlify','JavaScript'],
+    links: [
+      {label:'GitHub Vue', cls:'gh', href:'https://github.com/sumanthreddy8910/sumanth_vue.git'},
+      {label:'GitHub Node', cls:'gh', href:'https://github.com/sumanthreddy8910/sumanth_node.git'}
+    ]
+  },
+  {
+    num: 'PROJECT_02',
+    title: 'Facebook Spam Detector',
+    yr: '2024 // University of New Haven',
+    grad: 'linear-gradient(90deg,#ffb700,#ff004f)',
+    desc: 'A machine learning system that identifies spam content in Facebook posts using natural language processing techniques. Multiple classifiers were trained and evaluated, with results visualized using ROC curves, confusion matrices, and heatmaps to compare performance across models.',
+    feats: [
+      'NLP preprocessing: tokenization, TF-IDF, stop-word removal',
+      'Multiple classifiers: Naive Bayes, SVM, Random Forest',
+      'ROC curve and AUC analysis for model evaluation',
+      'Confusion matrix & heatmap visualizations',
+      'Feature importance analysis for interpretability'
+    ],
+    tags: ['Python','scikit-learn','NLP','TF-IDF','Pandas','Matplotlib','Seaborn'],
+    links: [
+      {label:'GitHub', cls:'gh', href:'https://github.com/sumanthreddy8910/Final-Report-Data_Mining.git'}
+    ]
+  },
+  {
+    num: 'PROJECT_03',
+    title: 'Full-Stack Web App',
+    yr: '2024 // University of New Haven',
+    grad: 'linear-gradient(90deg,#bf5fff,#00f5ff)',
+    desc: 'A dynamic web application focused on data management and live interaction. Built with a MongoDB backend exposed through REST APIs, the app enables real-time data querying and updates. Deployed publicly on Netlify for live access.',
+    feats: [
+      'Dynamic data management with real-time updates',
+      'MongoDB backend with RESTful API layer',
+      'Responsive frontend with modern UI/UX patterns',
+      'Live deployment accessible via Netlify',
+      'Form validation and error handling'
+    ],
+    tags: ['MongoDB','REST API','JavaScript','HTML','CSS','Netlify'],
+    links: [
+      {label:'Live Demo', cls:'lv', href:'https://sumanth-reddy.netlify.app/'}
+    ]
+  },
+  {
+    num: 'PROJECT_04',
+    title: 'Steganography Research',
+    yr: '2023 // University of New Haven',
+    grad: 'linear-gradient(90deg,#ff004f,#ffb700)',
+    desc: 'A cybersecurity research project exploring data hiding techniques in digital media. Hidden data is embedded inside BMP image files and WAV audio files using steganographic algorithms, enabling covert communication without detectable alterations to the carrier file.',
+    feats: [
+      'LSB (Least Significant Bit) encoding in BMP images',
+      'Audio steganography in WAV files via phase coding',
+      'Payload capacity analysis and detectability testing',
+      'Steganalysis resistance evaluation',
+      'Research paper documenting methodology and findings'
+    ],
+    tags: ['Python','Steganography','Cybersecurity','BMP','WAV','LSB','Research'],
+    links: [
+      {label:'GitHub', cls:'gh', href:'https://github.com/sumanthreddy8910/Steaganography---Research-Paper.git'}
+    ]
+  },
+  {
+    num: 'PROJECT_05',
+    title: 'Polyclinic DBMS',
+    yr: '2022 // University of New Haven',
+    grad: 'linear-gradient(90deg,#00ff41,#00f5ff)',
+    desc: 'A comprehensive database management system for a dentist polyclinic. The system handles patient records, appointment scheduling, billing automation, and doctor management with a fully normalized relational schema designed using ER modeling principles.',
+    feats: [
+      'Fully normalized MySQL relational database (3NF)',
+      'ER diagram and schema design from scratch',
+      'Automated billing calculation with stored procedures',
+      'Appointment scheduling with conflict detection',
+      'Patient and doctor record management'
+    ],
+    tags: ['MySQL','DBMS','ER Modeling','SQL','Stored Procedures','Normalization'],
+    links: [
+      {label:'GitHub', cls:'gh', href:'https://github.com/sumanthreddy8910/Dentist-Polyclinic-Management-System-DBMS-.git'}
+    ]
+  },
+  {
+    num: 'PROJECT_06 // PUBLISHED',
+    title: 'Fake News Detector',
+    yr: '2021–2022 // SRM University',
+    grad: 'linear-gradient(90deg,#bf5fff,#ff004f)',
+    desc: 'An ensemble machine learning system to detect fake news articles with 94.5% accuracy. This research was peer-reviewed and published in IJRASET Volume 10, March 2022. The system combines multiple ML models and linguistic features to outperform single-classifier approaches.',
+    feats: [
+      '94.5% accuracy using ensemble learning methods',
+      'Feature engineering: n-grams, sentiment, readability scores',
+      'Voting classifier combining SVM, LR, and Random Forest',
+      'Dataset of 40,000+ labeled news articles',
+      'Published in IJRASET Vol. 10, Issue III, March 2022'
+    ],
+    tags: ['Python','Ensemble ML','NLP','scikit-learn','SVM','Random Forest','Published Research'],
+    links: [
+      {label:'GitHub', cls:'gh', href:'https://github.com/sumanthreddy8910/Learning-Based-Fake-News-Detector-Using-Multiple-Features-Using-Machine-Learning.git'}
+    ]
+  }
+];
+
+function openProjModal(idx) {
+  var p = PROJECTS[idx];
+  document.getElementById('pm-bar-title').textContent = p.num;
+  document.getElementById('pm-num').textContent = p.num;
+  document.getElementById('pm-title').textContent = p.title;
+  document.getElementById('pm-yr').textContent = p.yr;
+  document.getElementById('pm-accent').style.background = p.grad;
+  document.getElementById('pm-desc').textContent = p.desc;
+  // features
+  var featsEl = document.getElementById('pm-feats');
+  featsEl.innerHTML = p.feats.map(function(f){ return '<li>'+f+'</li>'; }).join('');
+  // tags
+  var tagsEl = document.getElementById('pm-tags');
+  tagsEl.innerHTML = p.tags.map(function(t){ return '<span class="pm-tag">'+t+'</span>'; }).join('');
+  // links
+  var linksEl = document.getElementById('pm-links');
+  linksEl.innerHTML = p.links.map(function(l){ return '<a class="pm-link '+l.cls+'" href="'+l.href+'" target="_blank">'+l.label+'</a>'; }).join('');
+  // open
+  document.getElementById('proj-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProjModal() {
+  document.getElementById('proj-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeProjModal(); });
 
 /* ══ THEME SWITCHER ══ */
 var themes = ['matrix','cyber','neon','solar'];

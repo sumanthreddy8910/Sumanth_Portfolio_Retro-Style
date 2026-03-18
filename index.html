@@ -1248,22 +1248,11 @@ function setTheme(name, btn) {
   // update active dot
   document.querySelectorAll('.theme-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  // persist
-  try { localStorage.setItem('sd-theme', name); } catch(e){}
 }
-// restore saved theme on load
+// always start in green (matrix) mode
 (function(){
-  try {
-    var saved = localStorage.getItem('sd-theme');
-    if (saved && saved !== 'matrix') {
-      document.body.classList.add('theme-' + saved);
-      var btn = document.querySelector('.theme-btn[data-theme="' + saved + '"]');
-      if (btn) {
-        document.querySelectorAll('.theme-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-      }
-    }
-  } catch(e){}
+  var btn = document.querySelector('.theme-btn[data-theme="matrix"]');
+  if (btn) btn.classList.add('active');
 })();
 </script>
 </body>

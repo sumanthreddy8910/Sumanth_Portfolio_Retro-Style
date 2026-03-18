@@ -483,6 +483,48 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
   .nav-btns{display:none;}
   section{padding:4rem 5vw;}
 }
+
+/* ═══ THEME SWITCHER ═══ */
+.theme-switcher{display:flex;align-items:center;gap:.4rem;margin-left:.8rem;padding-left:.8rem;border-left:1px solid #0f2a1a;}
+.theme-btn{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;flex-shrink:0;}
+.theme-btn:hover{transform:scale(1.3);}
+.theme-btn.active{border-color:rgba(255,255,255,0.7);transform:scale(1.2);}
+.theme-btn.active::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);}
+.theme-btn[data-theme="matrix"]{background:#00ff41;box-shadow:0 0 6px #00ff4188;}
+.theme-btn[data-theme="cyber"]{background:#00b4ff;box-shadow:0 0 6px #00b4ff88;}
+.theme-btn[data-theme="neon"]{background:#cc44ff;box-shadow:0 0 6px #cc44ff88;}
+.theme-btn[data-theme="solar"]{background:#ff6a00;box-shadow:0 0 6px #ff6a0088;}
+
+/* theme transition */
+body{transition:background .4s;}
+:root{transition:--g .4s,--c .4s,--a .4s,--p .4s,--r .4s,--bg .4s,--bg2 .4s,--card .4s,--border .4s;}
+
+/* CYBER BLUE theme */
+body.theme-cyber{
+  --g:#00b4ff;--c:#7df9ff;--a:#00e5ff;--r:#ff2d78;--p:#4488ff;
+  --bg:#01040d;--bg2:#020810;--card:#030912;--border:#0a1830;
+  --gs:0 0 10px #00b4ffaa,0 0 22px #00b4ff44;
+  --cs:0 0 10px #7df9ffaa,0 0 22px #7df9ff44;
+  --as:0 0 10px #00e5ffaa,0 0 22px #00e5ff44;
+}
+
+/* NEON PURPLE theme */
+body.theme-neon{
+  --g:#cc44ff;--c:#ff44cc;--a:#ffcc00;--r:#ff2244;--p:#8844ff;
+  --bg:#080210;--bg2:#0a0215;--card:#0c0318;--border:#1a0830;
+  --gs:0 0 10px #cc44ffaa,0 0 22px #cc44ff44;
+  --cs:0 0 10px #ff44ccaa,0 0 22px #ff44cc44;
+  --as:0 0 10px #ffcc00aa,0 0 22px #ffcc0044;
+}
+
+/* SOLAR ORANGE theme */
+body.theme-solar{
+  --g:#ff8c00;--c:#ffd700;--a:#ff4500;--r:#ff1744;--p:#ff6a00;
+  --bg:#0d0600;--bg2:#100800;--card:#140900;--border:#2a1400;
+  --gs:0 0 10px #ff8c00aa,0 0 22px #ff8c0044;
+  --cs:0 0 10px #ffd700aa,0 0 22px #ffd70044;
+  --as:0 0 10px #ff4500aa,0 0 22px #ff450044;
+}
 </style>
 </head>
 <body>
@@ -540,6 +582,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 8vw
   </div>
   <div class="nav-btns">
     <a href="#contact" class="nav-btn nav-btn-c">⚡ Hire Me</a>
+  </div>
+  <div class="theme-switcher">
+    <div class="theme-btn active" data-theme="matrix" title="Matrix Green" onclick="setTheme('matrix',this)"></div>
+    <div class="theme-btn" data-theme="cyber" title="Cyber Blue" onclick="setTheme('cyber',this)"></div>
+    <div class="theme-btn" data-theme="neon" title="Neon Purple" onclick="setTheme('neon',this)"></div>
+    <div class="theme-btn" data-theme="solar" title="Solar Orange" onclick="setTheme('solar',this)"></div>
   </div>
 </nav>
 
@@ -962,6 +1010,34 @@ function clearFS() {
   var el = document.getElementById('form-status');
   if (el) el.remove();
 }
+
+/* ══ THEME SWITCHER ══ */
+var themes = ['matrix','cyber','neon','solar'];
+function setTheme(name, btn) {
+  // remove all theme classes
+  themes.forEach(function(t){ document.body.classList.remove('theme-' + t); });
+  // add new theme (matrix = default, no class needed)
+  if (name !== 'matrix') document.body.classList.add('theme-' + name);
+  // update active dot
+  document.querySelectorAll('.theme-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  // persist
+  try { localStorage.setItem('sd-theme', name); } catch(e){}
+}
+// restore saved theme on load
+(function(){
+  try {
+    var saved = localStorage.getItem('sd-theme');
+    if (saved && saved !== 'matrix') {
+      document.body.classList.add('theme-' + saved);
+      var btn = document.querySelector('.theme-btn[data-theme="' + saved + '"]');
+      if (btn) {
+        document.querySelectorAll('.theme-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      }
+    }
+  } catch(e){}
+})();
 </script>
 </body>
 </html>

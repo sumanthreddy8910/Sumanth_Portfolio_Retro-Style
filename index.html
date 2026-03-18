@@ -942,3 +942,26 @@ function showFS(type, text) {
   var el = document.getElementById('form-status');
   if (!el) {
     el = document.createElement('div');
+    el.id = 'form-status';
+    el.style.cssText = 'margin-top:.5rem;font-size:11px;padding:.6rem 1rem;border:1px solid;letter-spacing:1px;font-family:"Share Tech Mono",monospace;';
+    document.querySelector('.cform').appendChild(el);
+  }
+  if (type === 'error') {
+    el.style.color = 'var(--r)';
+    el.style.borderColor = 'var(--r)';
+    el.style.background = 'rgba(255,0,79,0.06)';
+  } else {
+    el.style.color = 'var(--g)';
+    el.style.borderColor = 'var(--g)';
+    el.style.background = 'rgba(0,255,65,0.06)';
+  }
+  el.textContent = text;
+}
+
+function clearFS() {
+  var el = document.getElementById('form-status');
+  if (el) el.remove();
+}
+</script>
+</body>
+</html>

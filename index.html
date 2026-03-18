@@ -24,6 +24,13 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 #cursor-trail{position:fixed;width:7px;height:7px;border:1px solid var(--c);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);opacity:0.4;}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--c);}
 
+/* ── Hide custom cursor on touch / mobile devices ── */
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+  #cursor, #cursor-trail { display: none !important; }
+  .btn, .nav-btn, .ol-close, .ol-dl-btn { cursor: pointer; }
+}
+
 /* LOADER */
 #loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.6rem;transition:opacity .6s;}
 .ld-logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:36px;letter-spacing:-2px;}

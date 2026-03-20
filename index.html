@@ -1033,7 +1033,7 @@ body.theme-solar{
     <div class="ai-panel-title">AGENT_SD</div>
     <button class="ai-panel-close" onclick="toggleAIPanel()">[ X ]</button>
   </div>
-  <div class="ai-panel-sub">AGENT_SD — Sumanth's personal AI operative</div>
+  <div class="ai-panel-sub">// AGENT_SD — Sumanth's personal AI operative</div>
   <div class="ai-messages" id="ai-messages">
     <div class="ai-msg bot">
       <span class="ai-sender">AGENT_SD</span>
@@ -1046,7 +1046,7 @@ body.theme-solar{
     <div class="ai-chip" onclick="askChip(this)">Is he open to work?</div>
     <div class="ai-chip" onclick="askChip(this)">His published research?</div>
   </div>
-  <div class="ai-input-row">
+  <div class="ai-input-row" id="ai-input-row">
     <input id="ai-input" type="text" placeholder="Ask about Sumanth..." onkeydown="if(event.key==='Enter')sendAI()"/>
     <button id="ai-send" onclick="sendAI()">SEND</button>
   </div>
@@ -1478,6 +1478,7 @@ AVAILABILITY: Open to exciting GenAI opportunities
 Keep answers concise (3-6 sentences). Be professional but friendly. Provide email if asked about contact. Don't make up info beyond what's provided.`;
 
 var aiHistory = [];
+var GROQ_KEY = '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';
 
 function toggleAIPanel() {
   AI_PANEL_OPEN = !AI_PANEL_OPEN;
@@ -1535,25 +1536,30 @@ async function sendAI() {
   var thinking = appendThinking();
 
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var messages = [{ role: 'system', content: SUMANTH_CONTEXT }].concat(aiHistory);
+    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GROQ_KEY
+      },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'llama-3.3-70b-versatile',
         max_tokens: 1000,
-        system: SUMANTH_CONTEXT,
-        messages: aiHistory
+        messages: messages
       })
     });
     var data = await res.json();
-    var reply = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : 'Sorry, something went wrong. Please try again.';
+    var reply = (data.choices && data.choices[0] && data.choices[0].message)
+      ? data.choices[0].message.content
+      : (data.error ? '⚠ ' + data.error.message : 'Sorry, something went wrong.');
     thinking.remove();
     appendMsg('bot', reply);
     aiHistory.push({ role: 'assistant', content: reply });
     if (aiHistory.length > 20) aiHistory = aiHistory.slice(-20);
   } catch(e) {
     thinking.remove();
-    appendMsg('bot', 'Network error. Please try again.');
+    appendMsg('bot', 'Network error. Check your API key or internet connection.');
   }
   sendBtn.disabled = false;
   inp.focus();

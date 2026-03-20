@@ -31,6 +31,151 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   .btn, .nav-btn, .ol-close, .ol-dl-btn { cursor: pointer; }
 }
 
+/* ══════════════════════════════════════
+   AI CHAT PANEL
+══════════════════════════════════════ */
+.ai-fab-dot{border-radius:50%;background:var(--p);animation:fabPulse 1.5s ease-in-out infinite;}
+@keyframes fabPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(0.6);}}
+
+#ai-fab{
+  position:fixed;bottom:5.5rem;right:1.8rem;z-index:9990;
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  padding:0;width:auto;height:auto;border-radius:0;
+  border:none;background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+  filter:drop-shadow(0 0 14px rgba(191,95,255,0.9)) drop-shadow(0 0 28px rgba(0,245,255,0.4));
+}
+#ai-fab:hover{filter:drop-shadow(0 0 22px rgba(191,95,255,1)) drop-shadow(0 0 44px rgba(0,245,255,0.7));transform:translateY(-3px) scale(1.04);}
+
+#ai-fab-inner{
+  position:relative;
+  padding:.8rem 1.6rem .8rem 1.1rem;
+  background:linear-gradient(135deg,#1a004a,#0d0030,#1a004a);
+  border:2px solid #bf5fff;
+  display:flex;align-items:center;gap:.65rem;
+  clip-path:polygon(14px 0%,100% 0%,calc(100% - 14px) 100%,0% 100%);
+  overflow:hidden;
+  min-width:120px;
+}
+#ai-fab-inner::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(191,95,255,0.22),rgba(0,245,255,0.1),transparent);
+  animation:fabShimmer 1.8s ease-in-out infinite;
+}
+@keyframes fabShimmer{0%{transform:translateX(-100%);}100%{transform:translateX(200%);}}
+
+#ai-fab-inner::after{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#bf5fff,#00f5ff,#bf5fff,transparent);
+  animation:fabTopLine 2s ease-in-out infinite;
+}
+@keyframes fabTopLine{0%,100%{opacity:.6;}50%{opacity:1;}}
+
+.fab-icon{
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,#00f5ff,#bf5fff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;
+  box-shadow:0 0 10px #bf5fffaa, 0 0 20px #00f5ff44;
+  animation:fabIconPulse 2s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+@keyframes fabIconPulse{0%,100%{box-shadow:0 0 10px #bf5fffaa;}50%{box-shadow:0 0 20px #00f5ffcc,0 0 36px #bf5fff66;}}
+
+.fab-text-wrap{display:flex;flex-direction:column;align-items:flex-start;position:relative;z-index:1;}
+.fab-label{
+  font-family:'Orbitron',sans-serif;font-weight:900;font-size:14px;
+  color:#ffffff;
+  text-shadow:0 0 10px #bf5fff, 0 0 20px #00f5ff88;
+  letter-spacing:4px;line-height:1;
+}
+@keyframes fabTextFlow{0%{background-position:100%;}100%{background-position:-100%;}}
+.fab-sublabel{font-family:'Share Tech Mono',monospace;font-size:8px;color:#cc88ff;letter-spacing:2px;line-height:1;margin-top:3px;opacity:0.9;}
+
+.fab-ping{
+  position:absolute;top:-5px;right:-5px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--c);
+  box-shadow:0 0 8px var(--c), 0 0 16px var(--c);
+  animation:fabPing 1.8s ease-in-out infinite;
+}
+@keyframes fabPing{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.7);opacity:.5;}}
+
+#ai-panel{
+  position:fixed;bottom:0;right:0;z-index:9989;
+  width:min(420px,100vw);height:min(560px,100vh);
+  background:rgba(2,4,10,0.97);border:1px solid #1a0828;
+  border-right:none;border-bottom:none;
+  backdrop-filter:blur(18px);
+  display:flex;flex-direction:column;
+  transform:translateX(110%);
+  transition:transform .4s cubic-bezier(0.22,1,0.36,1);
+  box-shadow:-6px 0 40px rgba(191,95,255,0.12);
+}
+#ai-panel.open{transform:translateX(0);}
+
+.ai-panel-header{
+  padding:.9rem 1.1rem;border-bottom:1px solid #1a0828;
+  display:flex;align-items:center;justify-content:space-between;
+  background:#04010a;flex-shrink:0;
+}
+.ai-panel-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;color:var(--p);letter-spacing:3px;display:flex;align-items:center;gap:.5rem;}
+.ai-panel-title::before{content:'AI';font-family:'Orbitron',sans-serif;font-weight:900;font-size:16px;color:transparent;background:linear-gradient(135deg,var(--c),var(--p));-webkit-background-clip:text;background-clip:text;}
+.ai-panel-close{font-family:'Orbitron',sans-serif;font-weight:700;font-size:11px;color:#aa66cc;border:1px solid #6a2a9a;padding:.3rem .7rem;cursor:pointer;background:transparent;letter-spacing:1px;transition:all .2s;}
+.ai-panel-close:hover{color:var(--p);border-color:var(--p);}
+
+.ai-panel-sub{padding:.5rem 1.1rem;font-family:'Orbitron',sans-serif;font-size:10px;color:#9966bb;letter-spacing:1.5px;background:#080010;border-bottom:1px solid #2a0a4a;flex-shrink:0;}
+
+.ai-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.8rem;scrollbar-width:thin;scrollbar-color:var(--p) transparent;}
+.ai-messages::-webkit-scrollbar{width:3px;}
+.ai-messages::-webkit-scrollbar-thumb{background:var(--p);}
+
+.ai-msg{max-width:88%;font-size:13px;line-height:1.75;font-family:'Segoe UI',system-ui,sans-serif;animation:msgIn .25s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.ai-msg.user{
+  align-self:flex-end;
+  background:rgba(191,95,255,0.14);border:1px solid rgba(191,95,255,0.45);
+  color:#e0aaff;padding:.6rem .9rem;
+  border-radius:0 0 0 4px;
+}
+.ai-msg.bot{
+  align-self:flex-start;
+  background:rgba(0,245,255,0.07);border:1px solid rgba(0,245,255,0.25);
+  color:#a0ddd0;padding:.6rem .9rem;
+  border-radius:0 0 4px 0;
+  white-space:pre-wrap;
+}
+.ai-msg.bot .ai-sender{font-family:'Orbitron',sans-serif;font-weight:700;font-size:9px;color:#cc88ff;letter-spacing:2px;margin-bottom:.5rem;display:block;}
+.ai-msg.bot.thinking .ai-dots span{display:inline-block;animation:dotBounce .9s ease-in-out infinite;}
+.ai-msg.bot.thinking .ai-dots span:nth-child(2){animation-delay:.18s;}
+.ai-msg.bot.thinking .ai-dots span:nth-child(3){animation-delay:.36s;}
+@keyframes dotBounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-5px);}}
+
+.ai-chips{padding:.6rem 1rem;display:flex;gap:.4rem;flex-wrap:wrap;border-top:1px solid #2a0a4a;flex-shrink:0;background:#060010;}
+.ai-chip{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:600;padding:.35rem .75rem;border:1px solid #6a2a9a;color:#cc88ff;cursor:pointer;letter-spacing:.5px;transition:all .2s;white-space:nowrap;}
+.ai-chip:hover{border-color:var(--p);color:var(--p);background:rgba(191,95,255,0.1);}
+
+.ai-input-row{padding:.75rem 1rem;border-top:1px solid #2a0a4a;display:flex;gap:.5rem;flex-shrink:0;background:#04010a;}
+#ai-input{
+  flex:1;background:#100020;border:1px solid #3a1060;
+  color:#e0aaff;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;
+  padding:.55rem .8rem;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+#ai-input:focus{border-color:var(--p);box-shadow:0 0 8px rgba(191,95,255,0.3);}
+#ai-input::placeholder{color:#7a4a9a;}
+#ai-send{
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;
+  padding:.55rem .9rem;border:1px solid var(--p);color:var(--p);
+  background:transparent;cursor:pointer;letter-spacing:1px;
+  transition:all .2s;flex-shrink:0;
+}
+#ai-send:hover{background:var(--p);color:var(--bg);}
+#ai-send:disabled{opacity:.3;cursor:not-allowed;}
+
 /* LOADER */
 #loader{position:fixed;inset:0;background:var(--bg);z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.6rem;transition:opacity .6s;}
 .ld-logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:36px;letter-spacing:-2px;}
@@ -871,6 +1016,42 @@ body.theme-solar{
   </div>
 </div>
 
+<!-- AI CHAT PANEL -->
+<button id="ai-fab" onclick="toggleAIPanel()" title="Ask AI about Sumanth">
+  <div id="ai-fab-inner">
+    <div class="fab-ping"></div>
+    <div class="fab-icon">✦</div>
+    <div class="fab-text-wrap">
+      <span class="fab-label">Ask</span>
+      <span class="fab-sublabel">AGENT_SD</span>
+    </div>
+  </div>
+</button>
+
+<div id="ai-panel">
+  <div class="ai-panel-header">
+    <div class="ai-panel-title">AGENT_SD</div>
+    <button class="ai-panel-close" onclick="toggleAIPanel()">[ X ]</button>
+  </div>
+  <div class="ai-panel-sub">AGENT_SD — Sumanth's personal AI operative</div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-msg bot">
+      <span class="ai-sender">AGENT_SD</span>
+      Hey! 👾 I'm AGENT_SD — Sumanth's personal AI. Ask me anything about his experience, projects, or skills!
+    </div>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <div class="ai-chip" onclick="askChip(this)">What stack does he use?</div>
+    <div class="ai-chip" onclick="askChip(this)">Tell me about his AI projects</div>
+    <div class="ai-chip" onclick="askChip(this)">Is he open to work?</div>
+    <div class="ai-chip" onclick="askChip(this)">His published research?</div>
+  </div>
+  <div class="ai-input-row">
+    <input id="ai-input" type="text" placeholder="Ask about Sumanth..." onkeydown="if(event.key==='Enter')sendAI()"/>
+    <button id="ai-send" onclick="sendAI()">SEND</button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="ftbrand"><span class="fa">A</span><span class="fi2">I</span> &nbsp;//&nbsp; SUMANTH_D </div>
@@ -1237,6 +1418,146 @@ function closeProjModal() {
 }
 
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeProjModal(); });
+
+/* ══ AI CHAT ══ */
+var AI_PANEL_OPEN = false;
+
+var SUMANTH_CONTEXT = `You are AGENT_SD — a personal AI assistant embedded in Sumanth Desireddy's portfolio website. Answer questions about him concisely and professionally. Here is everything you need to know:
+
+IDENTITY:
+- Full name: Sumanth Desireddy
+- Role: Generative AI & Software Engineer
+- Location: Currently in the US (Alpharetta GA / Irvine CA)
+- Email: desireddysumanth77@gmail.com | Phone: +1 (469) 850-1729
+- LinkedIn: linkedin.com/in/sumanth-d-773562361 | GitHub: github.com/sumanthreddy8910
+
+EDUCATION:
+- M.S. in Computer Science — University of New Haven (2022–2024), GPA: 3.71/4.0
+- B.Tech in CS & Engineering — SRM University (2018–2022), CGPA: 9.45/10.0
+
+CERTIFICATIONS:
+- Oracle Cloud Infrastructure 2025 Certified Generative AI Professional (Oct 2025, ID: 103014699OCI25GAIOCP)
+
+EXPERIENCE:
+1. Software Engineer — Generative AI | KKRGenAI Innovations, Alpharetta GA (Sep 2024 – Present)
+   - Designed domain-specific GenAI virtual health assistants using GPT-4, LLaMA, and Mistral
+   - Orchestrated AI agents using Crew.ai and LangGraph with LangChain, Pinecone, and Snowflake
+   - Integrated OpenAI Whisper for voice-to-text patient interactions
+   - Fine-tuned LLMs using LoRA and QLoRA for improved contextual accuracy
+   - Built Flask APIs, containerized with Docker, deployed on AWS Lambda and ECS
+
+2. AI/ML — Generative AI | RiteCare, Irvine CA (Jul 2023 – Aug 2024)
+   - Built healthcare chatbot powered by GPT-3.5 with LangChain and Pinecone
+   - Used FAISS for local vector database testing
+   - Developed real-time backend APIs using FastAPI
+
+3. Software Development Intern | Intellectuals AI Solutions, Hyderabad India (Aug 2021 – Jul 2022)
+   - Built RESTful APIs with Spring Boot (Java) and Flask (Python)
+   - Designed DB schemas for MySQL and MongoDB
+   - Participated in Agile: standups, sprint planning, retrospectives
+
+SKILLS:
+- Languages: Python, Java, JavaScript, SQL, HTML, CSS
+- Frameworks: Spring Boot, Flask, FastAPI, Node.js, Vue.js, LangChain, LangGraph, Crew.ai
+- Generative AI: GPT-4, LLaMA, Mistral, Prompt Engineering, Agentic Workflows, LoRA/QLoRA
+- AI/ML & NLP: RAG Pipelines, Pinecone, FAISS, Hugging Face, OpenAI Whisper, Scikit-learn, NLTK, Vector DB
+- Cloud & DevOps: AWS Lambda, ECS, EC2, Docker, CI/CD, Prometheus, Grafana
+- Databases: MySQL, MongoDB, Snowflake, Vector Databases
+
+PROJECTS:
+1. Web-Database App — Vue.js, Node.js, MongoDB, Netlify
+2. Facebook Spam Detector — NLP, TF-IDF, SVM, Random Forest, ROC curves
+3. Full-Stack Web App — MongoDB REST APIs, live at sumanth-reddy.netlify.app
+4. Steganography Research — LSB encoding in BMP/WAV files
+5. Polyclinic DBMS — MySQL, ER modeling, stored procedures
+6. Fake News Detector — PUBLISHED IJRASET Vol.10 March 2022, 94.5% accuracy, 40k+ articles
+
+STATS: 3+ years exp | 5+ AI projects | MS GPA 3.71 | B.Tech CGPA 9.45 | Published research
+AVAILABILITY: Open to exciting GenAI opportunities
+
+Keep answers concise (3-6 sentences). Be professional but friendly. Provide email if asked about contact. Don't make up info beyond what's provided.`;
+
+var aiHistory = [];
+
+function toggleAIPanel() {
+  AI_PANEL_OPEN = !AI_PANEL_OPEN;
+  document.getElementById('ai-panel').classList.toggle('open', AI_PANEL_OPEN);
+  document.getElementById('ai-fab').style.display = AI_PANEL_OPEN ? 'none' : 'flex';
+  if (AI_PANEL_OPEN) document.getElementById('ai-input').focus();
+}
+
+function askChip(el) {
+  var q = el.textContent;
+  document.getElementById('ai-input').value = q;
+  sendAI();
+  document.getElementById('ai-chips').style.display = 'none';
+}
+
+function appendMsg(role, text) {
+  var el = document.createElement('div');
+  el.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
+  if (role === 'bot') {
+    el.innerHTML = '<span class="ai-sender">AGENT_SD</span>' + escHtml(text);
+  } else {
+    el.textContent = text;
+  }
+  var box = document.getElementById('ai-messages');
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+  return el;
+}
+
+function appendThinking() {
+  var el = document.createElement('div');
+  el.className = 'ai-msg bot thinking';
+  el.innerHTML = '<span class="ai-sender">AGENT_SD</span><span class="ai-dots"><span>▪</span><span>▪</span><span>▪</span></span>';
+  var box = document.getElementById('ai-messages');
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+  return el;
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+async function sendAI() {
+  var inp = document.getElementById('ai-input');
+  var q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  var sendBtn = document.getElementById('ai-send');
+  sendBtn.disabled = true;
+
+  appendMsg('user', q);
+  aiHistory.push({ role: 'user', content: q });
+
+  var thinking = appendThinking();
+
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SUMANTH_CONTEXT,
+        messages: aiHistory
+      })
+    });
+    var data = await res.json();
+    var reply = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : 'Sorry, something went wrong. Please try again.';
+    thinking.remove();
+    appendMsg('bot', reply);
+    aiHistory.push({ role: 'assistant', content: reply });
+    if (aiHistory.length > 20) aiHistory = aiHistory.slice(-20);
+  } catch(e) {
+    thinking.remove();
+    appendMsg('bot', 'Network error. Please try again.');
+  }
+  sendBtn.disabled = false;
+  inp.focus();
+}
 
 /* ══ THEME SWITCHER ══ */
 var themes = ['matrix','cyber','neon','solar'];
